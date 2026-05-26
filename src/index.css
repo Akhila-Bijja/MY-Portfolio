@@ -1,0 +1,351 @@
+:root {
+  --font-main: 'Plus Jakarta Sans', sans-serif;
+
+  /* Velvet Sun Palette */
+  --velvet-start: #F83D3D;
+  --velvet-mid: #F5A57A;
+  --velvet-end: #E8E8B5;
+  --velvet-gradient: linear-gradient(135deg, var(--velvet-start), var(--velvet-mid), var(--velvet-end));
+
+  /* Dark Theme (Velvet Sun Dark) */
+  --bg-dark: #0A0A0A;
+  --text-dark: #FFFFFF;
+  --text-dim-dark: #A1A1AA;
+  --accent-1-dark: #F83D3D;
+  --accent-2-dark: #F5A57A;
+  --card-bg-dark: rgba(255, 255, 255, 0.03);
+  --card-border-dark: rgba(255, 255, 255, 0.1);
+  --glow-dark: rgba(248, 61, 61, 0.2);
+
+  /* Light Theme (Velvet Sun Light) */
+  --bg-light: #FFF9F5; 
+  --text-light: #2A3644;
+  --text-dim-light: #5A697A;
+  --accent-1-light: #E03D3D;
+  --accent-2-light: #CE6F3B;
+  --card-bg-light: #FFFFFF;
+  --card-border-light: #FCE6E6;
+  --glow-light: rgba(224, 61, 61, 0.15);
+
+  /* Set defaults to dark mode */
+  --bg: var(--bg-dark);
+  --text: var(--text-dark);
+  --text-dim: var(--text-dim-dark);
+  --accent-1: var(--accent-1-dark);
+  --accent-2: var(--accent-2-dark);
+  --card-bg: var(--card-bg-dark);
+  --card-border: var(--card-border-dark);
+  --glow: var(--glow-dark);
+  --gradient: var(--velvet-gradient);
+}
+
+html[data-theme='light'],
+[data-theme='light'] {
+  --bg: var(--bg-light) !important;
+  --text: var(--text-light) !important;
+  --text-dim: var(--text-dim-light) !important;
+  --accent-1: var(--accent-1-light) !important;
+  --accent-2: var(--accent-2-light) !important;
+  --card-bg: var(--card-bg-light) !important;
+  --card-border: var(--card-border-light) !important;
+  --glow: var(--glow-light) !important;
+  --gradient: var(--velvet-gradient) !important;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+  cursor: none !important;
+}
+
+body {
+  font-family: var(--font-main);
+  background-color: var(--bg) !important;
+  color: var(--text) !important;
+  line-height: 1.6;
+  min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Velvet Sun glow for light mode — warm coral blobs in corners */
+[data-theme='light'] body,
+html[data-theme='light'] body {
+  background-image:
+    radial-gradient(ellipse at 10% 10%, rgba(248, 61, 61, 0.12) 0%, transparent 50%),
+    radial-gradient(ellipse at 90% 20%, rgba(245, 165, 122, 0.14) 0%, transparent 45%),
+    radial-gradient(ellipse at 50% 90%, rgba(232, 200, 100, 0.10) 0%, transparent 50%) !important;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-left: 2rem;
+  padding-right: 2rem;
+}
+
+section {
+  padding: 10rem 0;
+  position: relative;
+}
+
+h1, h2, h3 {
+  letter-spacing: -0.02em;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+ul {
+  list-style: none;
+}
+
+.glass {
+  background: var(--card-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--card-border);
+  border-radius: 1rem;
+}
+
+.gradient-text {
+  background: var(--gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  border-radius: 9999px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btn-primary {
+  background: var(--gradient);
+  color: white;
+  border: none;
+  box-shadow: 0 4px 15px var(--glow);
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px var(--glow);
+}
+
+.btn-outline {
+  border: 1px solid var(--card-border);
+  color: var(--text);
+  background: transparent;
+}
+
+.btn-outline:hover {
+  background: var(--card-bg);
+  transform: translateY(-2px);
+}
+
+/* ============================================
+   SCROLL REVEAL ANIMATIONS
+   ============================================ */
+
+/* Fade up (default) */
+.sr-fade {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.sr-fade.sr-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Slide from left */
+.sr-left {
+  opacity: 0;
+  transform: translateX(-50px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.sr-left.sr-visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Slide from right */
+.sr-right {
+  opacity: 0;
+  transform: translateX(50px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.sr-right.sr-visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Scale up */
+.sr-scale {
+  opacity: 0;
+  transform: scale(0.85);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.sr-scale.sr-visible {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Stagger delays */
+.sr-delay-1 { transition-delay: 0.1s; }
+.sr-delay-2 { transition-delay: 0.2s; }
+.sr-delay-3 { transition-delay: 0.3s; }
+.sr-delay-4 { transition-delay: 0.4s; }
+.sr-delay-5 { transition-delay: 0.5s; }
+
+/* ============================================
+   HOVER CARD ANIMATIONS
+   ============================================ */
+
+.card-hover {
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+  cursor: default;
+}
+.card-hover:hover {
+  transform: translateY(-8px) scale(1.01);
+  box-shadow: 0 20px 50px var(--glow);
+  border-color: var(--accent-1);
+}
+
+/* ============================================
+   FLOATING / PULSE KEYFRAMES
+   ============================================ */
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-12px); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 10px var(--glow); }
+  50%       { box-shadow: 0 0 30px var(--glow), 0 0 60px var(--glow); }
+}
+
+@keyframes shimmer {
+  0%   { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+@keyframes bounce-in {
+  0%   { opacity: 0; transform: scale(0.3); }
+  50%  { opacity: 1; transform: scale(1.05); }
+  70%  { transform: scale(0.9); }
+  100% { transform: scale(1); }
+}
+
+.float-animation {
+  animation: float 4s ease-in-out infinite;
+}
+
+.pulse-btn {
+  animation: pulse-glow 2.5s ease-in-out infinite;
+}
+
+/* ============================================
+   NAVBAR LINK ANIMATIONS
+   ============================================ */
+
+nav ul li a {
+  position: relative;
+  transition: color 0.3s ease;
+}
+nav ul li a::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -3px;
+  width: 0%;
+  height: 2px;
+  background: var(--gradient);
+  border-radius: 2px;
+  transition: width 0.3s ease;
+}
+nav ul li a:hover::after {
+  width: 100%;
+}
+nav ul li a:hover {
+  color: var(--accent-1);
+}
+
+/* ============================================
+   SKILL / BADGE CHIP HOVER
+   ============================================ */
+
+.skill-chip {
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+.skill-chip:hover {
+  transform: translateY(-4px) scale(1.08);
+  box-shadow: 0 8px 20px var(--glow);
+  background: var(--gradient);
+  color: #fff;
+  -webkit-text-fill-color: #fff;
+}
+
+/* ============================================
+   GRADIENT SHIMMER (for headings)
+   ============================================ */
+
+.gradient-text-animated {
+  background: linear-gradient(
+    270deg,
+    var(--velvet-start),
+    var(--velvet-mid),
+    var(--velvet-end),
+    var(--velvet-mid),
+    var(--velvet-start)
+  );
+  background-size: 400% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shimmer 4s linear infinite;
+}
+
+/* ============================================
+   CERTIFICATE HOVER & LIGHTBOX STYLES
+   ============================================ */
+
+.glass.card-hover:hover .cert-preview-img {
+  transform: scale(1.08);
+}
+
+.btn-control:hover {
+  background: rgba(255, 255, 255, 0.15) !important;
+  transform: scale(1.1);
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+}
+
+.btn-close:hover {
+  color: var(--accent-1) !important;
+  background: rgba(255, 255, 255, 0.05) !important;
+  transform: rotate(90deg) scale(1.1);
+}
+
+.iframe-container,
+.iframe-container iframe,
+.iframe-container * {
+  cursor: auto !important;
+}
+
