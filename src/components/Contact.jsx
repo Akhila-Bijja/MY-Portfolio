@@ -1,32 +1,40 @@
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
-import { Send, Mail, Phone, MapPin } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Send, Mail, Phone, MapPin, CheckCircle, AlertCircle, Loader } from 'lucide-react';
+import { db, collection, addDoc, serverTimestamp } from '../firebase';
 
 const Contact = () => {
   const [formData, setFormData] = useState({ name: '', email: '', message: '' });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState('idle'); // 'idle' | 'success' | 'error'
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const { name, email, message } = formData;
+    setIsSubmitting(true);
+    setSubmitStatus('idle');
 
-    const subject = `Portfolio Contact from ${name}`;
-    const body = `Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`;
-    
-    // Direct Web-based Gmail compose URL (works instantly in any browser)
-    const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=bijjaakhila123@gmail.com&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-    
-    // Standard mailto backup link
-    const mailtoUrl = `mailto:bijjaakhila123@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-    
     try {
-      // Launch Gmail in a new tab
-      window.open(gmailUrl, '_blank');
+      // Save message details in Firebase Cloud Firestore
+      await addDoc(collection(db, "contacts"), {
+        name: formData.name,
+        email: formData.email,
+        message: formData.message,
+        timestamp: serverTimestamp(),
+      });
+
+      setSubmitStatus('success');
+      setFormData({ name: '', email: '', message: '' });
+      
+      // Reset success message after 5 seconds
+      setTimeout(() => {
+        setSubmitStatus('idle');
+      }, 5000);
     } catch (err) {
-      // Fallback if popups are blocked
-      window.location.href = mailtoUrl;
+      console.error("Firebase Database submission error:", err);
+      setSubmitStatus('error');
+    } finally {
+      setIsSubmitting(false);
     }
-    
-    setFormData({ name: '', email: '', message: '' });
   };
 
   return (
@@ -134,9 +142,75 @@ const Contact = () => {
                 }}
               ></textarea>
             </div>
-            <button type="submit" className="btn btn-primary" style={{ justifyContent: 'center', width: '100%' }}>
-              Send Message
-              <Send size={20} />
+
+            <AnimatePresence mode="wait">
+              {submitStatus === 'success' && (
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '0.75rem',
+                    padding: '1rem',
+                    background: 'rgba(16, 185, 129, 0.1)',
+                    border: '1px solid rgba(16, 185, 129, 0.2)',
+                    borderRadius: '0.75rem',
+                    color: '#10b981',
+                    fontSize: '0.95rem'
+                  }}
+                >
+                  <CheckCircle size={20} />
+                  <span>Message sent successfully! I'll get back to you soon.</span>
+                </motion.div>
+              )}
+
+              {submitStatus === 'error' && (
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '0.75rem',
+                    padding: '1rem',
+                    background: 'rgba(239, 68, 68, 0.1)',
+                    border: '1px solid rgba(239, 68, 68, 0.2)',
+                    borderRadius: '0.75rem',
+                    color: '#ef4444',
+                    fontSize: '0.95rem'
+                  }}
+                >
+                  <AlertCircle size={20} />
+                  <span>Failed to send message. Please try again.</span>
+                </motion.div>
+              )}
+            </AnimatePresence>
+
+            <button 
+              type="submit" 
+              className="btn btn-primary" 
+              disabled={isSubmitting}
+              style={{ 
+                justifyContent: 'center', 
+                width: '100%',
+                opacity: isSubmitting ? 0.7 : 1,
+                cursor: isSubmitting ? 'not-allowed' : 'pointer'
+              }}
+            >
+              {isSubmitting ? (
+                <>
+                  Sending...
+                  <Loader className="spinner" size={20} style={{ animation: 'spin 1s linear infinite' }} />
+                </>
+              ) : (
+                <>
+                  Send Message
+                  <Send size={20} />
+                </>
+              )}
             </button>
           </form>
         </motion.div>
