@@ -13,19 +13,37 @@ const Contact = () => {
     setIsSubmitting(true);
     setSubmitStatus('idle');
 
+    const { name, email, message } = formData;
+
     try {
-      // Save message details in Firebase Cloud Firestore
+      // 1. Save message details in Firebase Cloud Firestore
       await addDoc(collection(db, "contacts"), {
-        name: formData.name,
-        email: formData.email,
-        message: formData.message,
+        name,
+        email,
+        message,
         timestamp: serverTimestamp(),
       });
 
       setSubmitStatus('success');
+
+      // 2. Compose Gmail / Mailto redirect URLs
+      const subject = `Portfolio Contact from ${name}`;
+      const body = `Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`;
+      
+      const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=bijjaakhila123@gmail.com&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+      const mailtoUrl = `mailto:bijjaakhila123@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+
+      // 3. Launch the email composer in a new tab/window
+      try {
+        window.open(gmailUrl, '_blank');
+      } catch (err) {
+        window.location.href = mailtoUrl;
+      }
+
+      // Reset the form values
       setFormData({ name: '', email: '', message: '' });
       
-      // Reset success message after 5 seconds
+      // Reset success status indicator after 5 seconds
       setTimeout(() => {
         setSubmitStatus('idle');
       }, 5000);
