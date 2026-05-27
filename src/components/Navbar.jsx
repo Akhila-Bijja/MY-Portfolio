@@ -7,6 +7,7 @@ import profileImg from '../assets/profile.jpg';
 const Navbar = () => {
   const { theme, toggleTheme } = useTheme();
   const [isOpen, setIsOpen] = useState(false);
+  const [showProfileModal, setShowProfileModal] = useState(false);
 
   const navLinks = [
     { name: 'Home', href: '#home' },
@@ -31,18 +32,23 @@ const Navbar = () => {
         justifyContent: 'space-between',
         alignItems: 'center'
       }}>
-        {/* Profile Logo */}
+        {/* Profile Logo & Clickable Avatar */}
         <div style={{ fontWeight: 700, fontSize: '1.5rem', display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
           <img 
             src={profileImg} 
             alt="Akhila Bijja" 
+            onClick={() => setShowProfileModal(true)}
             style={{ 
               width: '35px', 
               height: '35px', 
               borderRadius: '50%', 
               objectFit: 'cover',
-              border: '1px solid var(--accent-1)'
+              border: '1px solid var(--accent-1)',
+              cursor: 'pointer',
+              transition: 'transform 0.2s ease'
             }} 
+            className="navbar-profile-avatar"
+            title="Click to view photo"
           />
           <span className="gradient-text">Akhila</span>
         </div>
@@ -117,6 +123,95 @@ const Navbar = () => {
                 </li>
               ))}
             </ul>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* PREMIUM PROFILE PHOTO LIGHTBOX MODAL */}
+      <AnimatePresence>
+        {showProfileModal && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setShowProfileModal(false)}
+            style={{
+              position: 'fixed',
+              inset: 0,
+              backgroundColor: 'rgba(0, 0, 0, 0.85)',
+              backdropFilter: 'blur(15px)',
+              zIndex: 999999,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              padding: '2rem'
+            }}
+          >
+            <motion.div
+              initial={{ scale: 0.9, y: 20 }}
+              animate={{ scale: 1, y: 0 }}
+              exit={{ scale: 0.9, y: 20 }}
+              transition={{ type: 'spring', damping: 25, stiffness: 200 }}
+              onClick={(e) => e.stopPropagation()}
+              className="glass"
+              style={{
+                position: 'relative',
+                padding: '1.5rem',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                gap: '1rem',
+                maxWidth: '450px',
+                width: '100%',
+                background: 'var(--bg)',
+                border: '1px solid var(--card-border)',
+                borderRadius: '1.5rem',
+                boxShadow: '0 25px 50px rgba(0, 0, 0, 0.5)'
+              }}
+            >
+              {/* Close Button */}
+              <button
+                onClick={() => setShowProfileModal(false)}
+                style={{
+                  position: 'absolute',
+                  top: '1rem',
+                  right: '1rem',
+                  background: 'transparent',
+                  border: 'none',
+                  color: 'var(--text-dim)',
+                  cursor: 'pointer',
+                  padding: '0.5rem',
+                  borderRadius: '50%',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  transition: 'color 0.2s'
+                }}
+                className="btn-close"
+              >
+                <X size={20} />
+              </button>
+
+              {/* Large Image view */}
+              <img 
+                src={profileImg} 
+                alt="Akhila Bijja" 
+                style={{
+                  width: '100%',
+                  height: '350px',
+                  borderRadius: '1rem',
+                  objectFit: 'cover',
+                  border: '1px solid var(--card-border)',
+                  boxShadow: '0 10px 20px rgba(0, 0, 0, 0.2)'
+                }}
+              />
+              <h3 style={{ fontSize: '1.4rem', fontWeight: 700, margin: 0 }}>
+                <span className="gradient-text">Akhila Bijja</span>
+              </h3>
+              <p style={{ color: 'var(--text-dim)', fontSize: '0.9rem', margin: 0, fontStyle: 'italic' }}>
+                Full Stack Developer
+              </p>
+            </motion.div>
           </motion.div>
         )}
       </AnimatePresence>
