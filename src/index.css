@@ -61,7 +61,7 @@ html[data-theme='light'],
 
 /* Custom Cursor support only for Desktop mouse hovering */
 @media (hover: hover) and (pointer: fine) {
-  body, a, button, [role="button"], .card-hover, .navbar-profile-avatar {
+  * {
     cursor: none !important;
   }
   
