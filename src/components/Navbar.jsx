@@ -99,7 +99,9 @@ const Navbar = () => {
               display: 'flex',
               flexDirection: 'column',
               gap: '1.5rem',
-              alignItems: 'center'
+              alignItems: 'center',
+              backgroundColor: 'var(--bg)', /* Use active theme background (solid) */
+              border: '1px solid var(--card-border)'
             }}
           >
             <ul style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', width: '100%', textAlign: 'center', fontWeight: 600 }}>

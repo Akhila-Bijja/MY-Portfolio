@@ -205,30 +205,30 @@ const Projects = () => {
               exit={{ scale: 0.9, y: 30 }}
               transition={{ type: 'spring', damping: 25, stiffness: 200 }}
               onClick={(e) => e.stopPropagation()}
-              className="glass"
+              className="glass lightbox-content"
               style={{
                 width: '100%',
                 maxWidth: '950px',
-                background: 'rgba(15, 15, 15, 0.85)',
-                border: '1px solid rgba(255, 255, 255, 0.08)',
+                background: 'var(--bg)', /* Ensure background matches current theme exactly */
+                border: '1px solid var(--card-border)',
                 borderRadius: '1.5rem',
                 overflow: 'hidden',
-                display: 'grid',
-                gridTemplateColumns: 'repeat(auto-fit, minmax(380px, 1fr))',
                 boxShadow: '0 25px 50px rgba(0, 0, 0, 0.6)'
               }}
             >
               {/* Left Column: Image Slideshow Viewer */}
-              <div style={{
-                position: 'relative',
-                background: '#030303',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                height: '480px',
-                overflow: 'hidden',
-                borderRight: '1px solid rgba(255, 255, 255, 0.08)'
-              }}>
+              <div 
+                className="lightbox-img-container"
+                style={{
+                  position: 'relative',
+                  background: '#030303',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  overflow: 'hidden',
+                  borderRight: '1px solid rgba(255, 255, 255, 0.08)'
+                }}
+              >
                 <AnimatePresence mode="wait">
                   <motion.img
                     key={activeProj.images[currentImgIndex]}

@@ -313,30 +313,30 @@ const Skills = () => {
               exit={{ scale: 0.9, y: 30 }}
               transition={{ type: 'spring', damping: 25, stiffness: 200 }}
               onClick={(e) => e.stopPropagation()}
-              className="glass"
+              className="glass lightbox-content"
               style={{
                 width: '100%',
                 maxWidth: '900px',
-                background: 'rgba(20, 20, 20, 0.75)',
-                border: '1px solid rgba(255, 255, 255, 0.08)',
+                background: 'var(--bg)', /* Ensure background matches current theme exactly */
+                border: '1px solid var(--card-border)',
                 borderRadius: '1.5rem',
                 overflow: 'hidden',
-                display: 'grid',
-                gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))',
                 boxShadow: '0 25px 50px rgba(0, 0, 0, 0.5)'
               }}
             >
               {/* Left Column: Image Viewer */}
-              <div style={{
-                position: 'relative',
-                background: '#050505',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                height: '450px',
-                overflow: 'hidden',
-                borderRight: '1px solid rgba(255, 255, 255, 0.08)'
-              }}>
+              <div 
+                className="lightbox-img-container"
+                style={{
+                  position: 'relative',
+                  background: '#050505',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  overflow: 'hidden',
+                  borderRight: '1px solid rgba(255, 255, 255, 0.08)'
+                }}
+              >
                 <AnimatePresence mode="wait">
                   <motion.img
                     key={activeCert.images ? activeCert.images[currentImgIndex] : activeCert.image}

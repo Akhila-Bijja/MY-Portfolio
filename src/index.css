@@ -355,6 +355,18 @@ nav ul li a:hover {
 }
 
 /* ============================================
+   LIGHTBOX MODAL & RESPONSIVE LAYOUTS
+   ============================================ */
+.lightbox-content {
+  display: grid !important;
+  grid-template-columns: 1.2fr 1fr !important;
+}
+
+.lightbox-img-container {
+  height: 480px !important;
+}
+
+/* ============================================
    RESPONSIVE DESIGN (MOBILE / TABLET)
    ============================================ */
 @media (max-width: 768px) {
@@ -399,6 +411,23 @@ nav ul li a:hover {
     gap: 2rem !important;
   }
 
+  /* Lightbox Responsiveness */
+  .lightbox-content {
+    grid-template-columns: 1fr !important;
+    max-height: 90vh !important;
+    overflow-y: auto !important;
+  }
+  
+  .lightbox-img-container {
+    height: 250px !important;
+    border-right: none !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+  }
+  
+  .lightbox-content > div:last-child {
+    padding: 1.5rem !important;
+  }
+
   /* Contact Form Layout */
   #contact > div {
     grid-template-columns: 1fr !important;
@@ -407,5 +436,13 @@ nav ul li a:hover {
   #contact .glass {
     padding: 2rem 1.5rem !important;
   }
+
+  /* Footer Alignment Override */
+  footer {
+    flex-direction: column !important;
+    gap: 1.5rem !important;
+    text-align: center !important;
+  }
 }
+
 
