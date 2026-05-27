@@ -57,8 +57,30 @@ html[data-theme='light'],
   padding: 0;
   box-sizing: border-box;
   transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
-  cursor: none !important;
 }
+
+/* Custom Cursor support only for Desktop mouse hovering */
+@media (hover: hover) and (pointer: fine) {
+  body, a, button, [role="button"], .card-hover, .navbar-profile-avatar {
+    cursor: none !important;
+  }
+  
+  /* Retain native text cursor in inputs so users can see where they are typing */
+  input, textarea {
+    cursor: text !important;
+  }
+}
+
+/* Fully restore default responsive cursors on Mobile / Tablets / Touch screens */
+@media (hover: none), (pointer: coarse) {
+  * {
+    cursor: auto !important;
+  }
+  a, button, [role="button"] {
+    cursor: pointer !important;
+  }
+}
+
 
 body {
   font-family: var(--font-main);
