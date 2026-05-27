@@ -354,3 +354,58 @@ nav ul li a:hover {
   to   { transform: rotate(360deg); }
 }
 
+/* ============================================
+   RESPONSIVE DESIGN (MOBILE / TABLET)
+   ============================================ */
+@media (max-width: 768px) {
+  /* Navbar Overrides */
+  .nav-links {
+    display: none !important;
+  }
+  .mobile-toggle {
+    display: inline-flex !important;
+  }
+  .resume-btn {
+    display: none !important;
+  }
+  nav {
+    width: 95% !important;
+    padding: 0.5rem 1.25rem !important;
+  }
+
+  /* Generic Spacing & Padding */
+  .container {
+    padding-left: 1.25rem !important;
+    padding-right: 1.25rem !important;
+  }
+  section {
+    padding: 6rem 0 !important;
+  }
+
+  /* Main Sections Override */
+  #home {
+    padding-top: 7rem !important;
+    min-height: auto !important;
+  }
+  #home h1 {
+    font-size: 2.75rem !important;
+  }
+
+  /* Skills & Projects Flex Grids */
+  .skills-grid, 
+  .projects-grid,
+  .experience-grid {
+    grid-template-columns: 1fr !important;
+    gap: 2rem !important;
+  }
+
+  /* Contact Form Layout */
+  #contact > div {
+    grid-template-columns: 1fr !important;
+    gap: 3rem !important;
+  }
+  #contact .glass {
+    padding: 2rem 1.5rem !important;
+  }
+}
+
