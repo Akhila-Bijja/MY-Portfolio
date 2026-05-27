@@ -107,31 +107,29 @@ const CursorGlow = () => {
         ref={dotRef}
         style={{
           position: 'fixed',
-          width: isHovered ? '56px' : '20px',
-          height: isHovered ? '56px' : '20px',
+          width: isHovered ? '48px' : '24px',
+          height: isHovered ? '48px' : '24px',
           borderRadius: '50%',
-          border: isHovered ? '2px dashed var(--accent-2)' : '2px solid var(--accent-1)',
-          background: isHovered ? 'rgba(245, 165, 122, 0.12)' : 'rgba(248, 61, 61, 0.03)',
+          border: '2px solid var(--accent-1)',
+          background: isHovered ? 'rgba(248, 61, 61, 0.15)' : 'rgba(248, 61, 61, 0.05)',
           transform: 'translate(-50%, -50%)',
           pointerEvents: 'none',
           zIndex: 999999,
-          boxShadow: isHovered ? '0 0 25px var(--accent-2)' : '0 0 8px var(--accent-1)',
-          transition: 'width 0.3s cubic-bezier(0.16, 1, 0.3, 1), height 0.3s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease',
+          boxShadow: isHovered ? '0 0 20px var(--accent-1)' : '0 0 10px var(--accent-1)',
+          transition: 'width 0.2s cubic-bezier(0.16, 1, 0.3, 1), height 0.2s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          backdropFilter: isHovered ? 'blur(2px)' : 'none',
-          webkitBackdropFilter: isHovered ? 'blur(2px)' : 'none',
         }}
       >
         {/* Tiny center dot */}
         <div
           style={{
-            width: isHovered ? '8px' : '4px',
-            height: isHovered ? '8px' : '4px',
+            width: isHovered ? '0px' : '4px',
+            height: isHovered ? '0px' : '4px',
             borderRadius: '50%',
-            background: isHovered ? 'var(--accent-2)' : 'var(--accent-1)',
-            transition: 'width 0.2s ease, height 0.2s ease, background-color 0.2s ease',
+            background: 'var(--accent-1)',
+            transition: 'width 0.2s ease, height 0.2s ease',
           }}
         />
       </div>
